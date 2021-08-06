@@ -1,0 +1,2 @@
+rootProject.name = "OR_LE_Inventario"
+include ':app'
