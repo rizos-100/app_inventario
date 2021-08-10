@@ -3,7 +3,7 @@ package org.rizosdb.utl.or_le_inventario.db;
 public class Utilidades {
 
     public static final int VERSION_DB = 1;
-    public static final String NOMBRE_DB = "db-inventario";
+    public static final String NOMBRE_DB = "InventarioDB";
 
     public static final String TABLA_VENDEDORES = "vendedor";
     public static final String TABLA_CLIENTES = "cliente";

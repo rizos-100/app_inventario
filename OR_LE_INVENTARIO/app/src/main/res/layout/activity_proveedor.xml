@@ -33,7 +33,7 @@
         app:layout_constraintVertical_bias="0.27">
 
         <EditText
-            android:id="@+id/txtNum"
+            android:id="@+id/txtID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -69,7 +69,7 @@
             android:textAlignment="center" />
 
         <EditText
-            android:id="@+id/txtCiudad"
+            android:id="@+id/txtTelefono"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -78,7 +78,7 @@
             android:textAlignment="center" />
 
         <EditText
-            android:id="@+id/txtRFC"
+            android:id="@+id/txtCorreo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -87,7 +87,7 @@
             android:textAlignment="center" />
 
         <EditText
-            android:id="@+id/txtTel"
+            android:id="@+id/txtComision"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -96,7 +96,7 @@
             android:textAlignment="center" />
 
         <EditText
-            android:id="@+id/txtEmail"
+            android:id="@+id/txtEmail_"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -133,7 +133,7 @@
             android:backgroundTint="#198754"
             android:drawableLeft="@drawable/ic_add_circle_outline_white_24dp"
             android:text="Agregar"
-            android:textSize="12sp" />/>
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/btnEliminar"
@@ -142,7 +142,7 @@
             android:backgroundTint="#DC3545"
             android:drawableLeft="@drawable/ic_delete_forever_white_24dp"
             android:text="Eliminar"
-            android:textSize="12sp" />/>
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/btnConsultar"
@@ -160,7 +160,7 @@
             android:backgroundTint="#D36C16"
             android:drawableLeft="@drawable/ic_create_white_24dp"
             android:text="Modificar"
-            android:textSize="10sp" />/>
+            android:textSize="10sp" />
 
         <Button
             android:id="@+id/btnLista"
@@ -169,7 +169,7 @@
             android:backgroundTint="#B23CED"
             android:drawableLeft="@drawable/ic_assignment_white_24dp"
             android:text="Lista"
-            android:textSize="12sp" />/>
+            android:textSize="12sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

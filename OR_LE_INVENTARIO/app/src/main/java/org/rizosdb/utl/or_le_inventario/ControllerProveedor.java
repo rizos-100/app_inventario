@@ -26,14 +26,14 @@ public class ControllerProveedor extends AppCompatActivity {
 
     private void iniciarComponentes(){
 
-        txtNum=(EditText)findViewById(R.id.txtNum);
+        txtNum=(EditText)findViewById(R.id.txtID);
         txtNombre=(EditText)findViewById(R.id.txtNombre);
         txtCalle=(EditText)findViewById(R.id.txtCalle);
         txtColonia=(EditText)findViewById(R.id.txtColonia);
-        txtCiudad=(EditText)findViewById(R.id.txtCiudad);
-        txtRFC=(EditText)findViewById(R.id.txtRFC);
-        txtTel=(EditText)findViewById(R.id.txtTel);
-        txtEmail=(EditText)findViewById(R.id.txtEmail);
+        txtCiudad=(EditText)findViewById(R.id.txtTelefono);
+        txtRFC=(EditText)findViewById(R.id.txtCorreo);
+        txtTel=(EditText)findViewById(R.id.txtComision);
+        txtEmail=(EditText)findViewById(R.id.txtEmail_);
         txtSaldo=(EditText)findViewById(R.id.txtSaldo);
 
 

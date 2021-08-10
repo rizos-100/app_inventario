@@ -9,11 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OR_LE_Inventario">
-<<<<<<< Updated upstream
         <activity android:name=".iu_vendedor.VendedorActivity"></activity>
-=======
         <activity android:name=".ControllerProveedor"></activity>
->>>>>>> Stashed changes
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
