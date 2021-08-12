@@ -47,9 +47,15 @@ public class MainActivity extends AppCompatActivity {
     }
     private void initButtons(){
         btnProveedores = (ImageButton) findViewById(R.id.btnProveedores);
+        btnProductos = (ImageButton) findViewById(R.id.btnProductos);
 
         btnProveedores.setOnClickListener(v -> {
             Intent intent = new Intent(this, ControllerProveedor.class);
+            startActivity(intent);
+        });
+
+        btnProductos.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ControllerProducto.class);
             startActivity(intent);
         });
 

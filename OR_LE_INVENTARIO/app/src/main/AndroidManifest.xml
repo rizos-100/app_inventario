@@ -11,6 +11,7 @@
         android:theme="@style/Theme.OR_LE_Inventario">
         <activity android:name=".iu_vendedor.VendedorActivity"></activity>
         <activity android:name=".ControllerProveedor"></activity>
+        <activity android:name=".ControllerProducto"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

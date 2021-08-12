@@ -43,6 +43,8 @@ public class ControllerProveedor extends AppCompatActivity {
         btnModifcar=(Button)findViewById(R.id.btnModificar);
         btnLista=(Button)findViewById(R.id.btnLista);
 
+        //txtNum.setEnabled(false);
+
         btnAgregar.setOnClickListener(v -> {
             agregarProveedor();
         });
@@ -72,7 +74,7 @@ public class ControllerProveedor extends AppCompatActivity {
     }
 
     private void agregarProveedor(){
-        if(txtNum.getText().toString().trim().length()==0||
+        if(
                 txtNombre.getText().toString().trim().length()==0||
                 txtCalle.getText().toString().trim().length()==0||
                 txtColonia.getText().toString().trim().length()==0||
@@ -85,7 +87,7 @@ public class ControllerProveedor extends AppCompatActivity {
             showMessage("Error!", "Porfavor introduce todos los valores");
             return;
         }
-            db.execSQL("INSERT INTO proveedor VALUES('" + txtNum.getText().toString().trim() + "','"
+            db.execSQL("INSERT INTO proveedor VALUES('" + asignarClave() + "','"
                     + txtNombre.getText().toString().trim() + "','"
                     + txtCalle.getText().toString().trim() + "','"
                     + txtColonia.getText().toString().trim() + "','"
@@ -180,6 +182,19 @@ public class ControllerProveedor extends AppCompatActivity {
         showMessage("Exito!", "Registro eliminado");
         txtNum.setEnabled(true);
         clearText();
+    }
+
+    private String asignarClave(){
+        String clave="";
+        String inicial="P";
+        Cursor c = db.rawQuery(" SELECT numero FROM proveedor", null);
+        int codigo=1;
+        if(c.getCount()> 0){
+            c.moveToLast();
+            codigo=Integer.parseInt(c.getString(0).substring(1))+1;
+        }
+        clave=inicial+codigo;
+        return clave;
     }
 
     public void showMessage(String title,String message)
