@@ -1,4 +1,4 @@
-package org.rizosdb.utl.or_le_inventario.iu_vendedor;
+package org.rizosdb.utl.or_le_inventario;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,16 +8,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import org.rizosdb.utl.or_le_inventario.R;
 import org.rizosdb.utl.or_le_inventario.db.ConexionSQLiteHelper;
 import org.rizosdb.utl.or_le_inventario.db.Utilidades;
 
-public class VendedorActivity extends AppCompatActivity {
+public class ControllerVendedor extends AppCompatActivity {
     ConexionSQLiteHelper sqLiteHelper ;
     EditText txtNombre,txtCalle,txtColonia,txtTelefono, txtCorreo ,txtComision,txtID,txtID_persona;
 
@@ -38,7 +35,7 @@ public class VendedorActivity extends AppCompatActivity {
         txtColonia = findViewById(R.id.txtColonia);
         txtTelefono = findViewById(R.id.txtTelefono);
         txtCorreo = findViewById(R.id.txtCorreo);
-        txtComision = findViewById(R.id.txtComision);
+        txtComision = findViewById(R.id.txtSaldo_cliente);
         txtID = findViewById(R.id.txtID);
         txtID_persona= findViewById(R.id.txtID_persona);
 

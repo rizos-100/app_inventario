@@ -32,7 +32,7 @@ public class ControllerProveedor extends AppCompatActivity {
         txtColonia=(EditText)findViewById(R.id.txtColonia);
         txtCiudad=(EditText)findViewById(R.id.txtTelefono);
         txtRFC=(EditText)findViewById(R.id.txtCorreo);
-        txtTel=(EditText)findViewById(R.id.txtComision);
+        txtTel=(EditText)findViewById(R.id.txtSaldo_cliente);
         txtEmail=(EditText)findViewById(R.id.txtEmail_);
         txtSaldo=(EditText)findViewById(R.id.txtSaldo);
 

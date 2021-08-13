@@ -7,21 +7,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
 
-import org.rizosdb.utl.or_le_inventario.db.ConexionSQLiteHelper;
-import org.rizosdb.utl.or_le_inventario.iu_vendedor.VendedorActivity;
-
 import android.content.Context;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.widget.ImageButton;
 
 
 public class MainActivity extends AppCompatActivity {
-    ImageButton btncProveedores,
+    ImageButton
             btnProductos,btnClientes,
             btnProveedores,btnCompras,
-            btnVentas;
+            btnVentas,btnVendedores;
 
     SQLiteDatabase db;
 
@@ -31,16 +26,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        ImageButton btnVendedores = findViewById(R.id.btnVendedores);
-
-        btnVendedores.setOnClickListener(v -> {
-            Intent intent = new Intent(this, VendedorActivity.class);
-            startActivity(intent);
-        });
-
-
-
         db=openOrCreateDatabase("InventarioDB", Context.MODE_PRIVATE, null);
         initButtons();
 
@@ -48,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private void initButtons(){
         btnProveedores = (ImageButton) findViewById(R.id.btnProveedores);
         btnProductos = (ImageButton) findViewById(R.id.btnProductos);
+        btnVendedores = findViewById(R.id.btnVendedores);
+        btnClientes = findViewById(R.id.btnClientes);
 
         btnProveedores.setOnClickListener(v -> {
             Intent intent = new Intent(this, ControllerProveedor.class);
@@ -56,6 +43,16 @@ public class MainActivity extends AppCompatActivity {
 
         btnProductos.setOnClickListener(v -> {
             Intent intent = new Intent(this, ControllerProducto.class);
+            startActivity(intent);
+        });
+
+        btnVendedores.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ControllerVendedor.class);
+            startActivity(intent);
+        });
+
+        btnClientes.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ControllerCliente.class);
             startActivity(intent);
         });
 
