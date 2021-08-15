@@ -13,6 +13,7 @@
         <activity android:name=".ControllerVendedor" />
         <activity android:name=".ControllerProveedor" />
         <activity android:name=".ControllerProducto" />
+        <activity android:name=".ControllerCompras" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

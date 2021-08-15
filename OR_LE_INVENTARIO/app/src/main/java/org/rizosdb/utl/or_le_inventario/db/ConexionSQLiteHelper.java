@@ -20,6 +20,8 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(Utilidades.CREAR_TABLA_PERSONA);
         db.execSQL(Utilidades.CREAR_TABLA_VENDEDOR);
         db.execSQL(Utilidades.CREAR_TABLA_CLIENTE);
+        db.execSQL(Utilidades.CREAR_TABLA_COMPRA);
+        db.execSQL(Utilidades.CREAR_TABLA_DETALLE_COMPRA);
 
     }
 
@@ -28,6 +30,8 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+Utilidades.TABLA_CLIENTES);
         db.execSQL("DROP TABLE IF EXISTS "+Utilidades.TABLA_VENDEDORES);
         db.execSQL("DROP TABLE IF EXISTS "+Utilidades.TABLA_PERSONAS);
+        db.execSQL("DROP TABLE IF EXISTS "+Utilidades.TABLA_COMPRAS);
+        db.execSQL("DROP TABLE IF EXISTS "+Utilidades.TABLA_DETALLE_COMPRAS);
         onCreate(db);
     }
 }

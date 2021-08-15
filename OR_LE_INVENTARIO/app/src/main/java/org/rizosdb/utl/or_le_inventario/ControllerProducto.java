@@ -151,7 +151,7 @@ public class ControllerProducto extends AppCompatActivity {
             showMessage("Error!", "Introduce Clave");
             return;
         }
-        Cursor c=db.rawQuery("SELECT * FROM producto WHERE numero ='"+txtNum.getText().toString().trim()+"'", null);
+        Cursor      c=db.rawQuery("SELECT * FROM producto WHERE numero ='"+txtNum.getText().toString().trim()+"'", null);
         if(c.moveToFirst())
         {
             String linea=c.getString(2);
