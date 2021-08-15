@@ -1,4 +1,4 @@
-package org.rizosdb.utl.or_le_inventario;
+package org.rizosdb.utl.or_le_inventario.controllers;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.rizosdb.utl.or_le_inventario.R;
 
 public class ControllerProveedor extends AppCompatActivity {
     private EditText txtNum,txtNombre,txtCalle,txtColonia,

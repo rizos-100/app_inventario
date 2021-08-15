@@ -1,4 +1,4 @@
-package org.rizosdb.utl.or_le_inventario;
+package org.rizosdb.utl.or_le_inventario.controllers;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.rizosdb.utl.or_le_inventario.R;
 
 import java.util.ArrayList;
 

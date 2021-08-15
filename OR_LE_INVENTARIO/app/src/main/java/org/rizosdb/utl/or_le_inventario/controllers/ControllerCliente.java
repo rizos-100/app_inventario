@@ -1,4 +1,4 @@
-package org.rizosdb.utl.or_le_inventario;
+package org.rizosdb.utl.or_le_inventario.controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,17 +11,20 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.rizosdb.utl.or_le_inventario.R;
 import org.rizosdb.utl.or_le_inventario.db.ConexionSQLiteHelper;
 import org.rizosdb.utl.or_le_inventario.db.Utilidades;
 
-public class ControllerVendedor extends AppCompatActivity {
+public class ControllerCliente extends AppCompatActivity {
+
     ConexionSQLiteHelper sqLiteHelper ;
-    EditText txtNombre,txtCalle,txtColonia,txtTelefono, txtCorreo ,txtComision,txtID,txtID_persona;
+    EditText txtNombre,txtCalle,txtColonia,txtCiudad,txtRFC,txtTelefono, txtCorreo ,txtSaldo,txtID,txtID_persona;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vendedor);
+        setContentView(R.layout.activity_cliente);
+
         sqLiteHelper = new ConexionSQLiteHelper(this,Utilidades.NOMBRE_DB,null, Utilidades.VERSION_DB);
 
         Button btnAgregar = findViewById(R.id.btnAgregar);
@@ -33,26 +36,28 @@ public class ControllerVendedor extends AppCompatActivity {
         txtNombre = findViewById(R.id.txtNombre);
         txtCalle = findViewById(R.id.txtCalle);
         txtColonia = findViewById(R.id.txtColonia);
+        txtCiudad = findViewById(R.id.txtCiudad);
+        txtRFC = findViewById(R.id.txtRFC);
         txtTelefono = findViewById(R.id.txtTelefono);
         txtCorreo = findViewById(R.id.txtCorreo);
-        txtComision = findViewById(R.id.txtSaldo_cliente);
+        txtSaldo = findViewById(R.id.txtSaldo_cliente);
         txtID = findViewById(R.id.txtID);
         txtID_persona= findViewById(R.id.txtID_persona);
 
         btnAgregar.setOnClickListener(v -> {
-            agregarVendedor();
+            agregarCiente();
         });
         btnConsultarTodo.setOnClickListener(v -> {
-            consultarTodo();
+            consultarTodosClientes();
         });
         btnConsultar.setOnClickListener(v -> {
             consultarPorId(txtID.getText().toString());
         });
         btnModificar.setOnClickListener(v -> {
-            modificarVendedor();
+            modificarCliente();
         });
         btnEliminar.setOnClickListener(v -> {
-            eliminarVendedor();
+            eliminarCliente();
         });
     }
 
@@ -65,12 +70,11 @@ public class ControllerVendedor extends AppCompatActivity {
         builder.show();
     }
 
-    public void agregarVendedor(){
+    public void agregarCiente(){
         if(validarTexto()){
             SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
             db.beginTransaction();
             try {
-
 
                 ContentValues values = new ContentValues();
                 values.put(Utilidades.TABLA_PERSONA_NOMBRE, txtNombre.getText().toString());
@@ -82,14 +86,16 @@ public class ControllerVendedor extends AppCompatActivity {
                 Long idPersona = db.insert(Utilidades.TABLA_PERSONAS, Utilidades.TABLA_PERSONA_ID, values);
 
                 ContentValues valuesFore = new ContentValues();
-                valuesFore.put(Utilidades.TABLA_VENDEDOR_COMISION, txtComision.getText().toString());
+                valuesFore.put(Utilidades.TABLA_CLIENTES_CIUDAD, txtCiudad.getText().toString());
+                valuesFore.put(Utilidades.TABLA_CLIENTES_RFC, txtRFC.getText().toString());
+                valuesFore.put(Utilidades.TABLA_CLIENTES_SALDO, txtSaldo.getText().toString());
                 valuesFore.put(Utilidades.TABLA_VENDEDOR_ID_PERSONA, idPersona);
-                Long idVendedor = db.insert(Utilidades.TABLA_VENDEDORES, Utilidades.TABLA_VENDEDOR_ID, valuesFore);
+                Long idCliente = db.insert(Utilidades.TABLA_CLIENTES, Utilidades.TABLA_CLIENTES_ID, valuesFore);
                 db.setTransactionSuccessful();
-                if(idVendedor > 0)
-                    showMessage("Vendedor(a) registrodo(a) con exito","Se ingreso con el ID: "+idVendedor);
+                if(idCliente > 0)
+                    showMessage("Cliente(a) registrodo(a) con exito","Se ingreso con el ID: "+idCliente);
                 else
-                    showMessage("Vendedor(a) registrodo(a) falló","Fallo el registro del vendedor(as)");
+                    showMessage("Cliente(a) registrodo(a) falló","Fallo el registro del cliente(as)");
 
                 clearText();
             }catch (Exception e){
@@ -104,11 +110,11 @@ public class ControllerVendedor extends AppCompatActivity {
                     "datos esten llenados correctamente");
     }
 
-    public void consultarTodo(){
+    public void consultarTodosClientes(){
         SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
         try {
-            String sql = "SELECT * FROM " + Utilidades.TABLA_PERSONAS+" p INNER JOIN "+Utilidades.TABLA_VENDEDORES+
-                    " v on p."+Utilidades.TABLA_PERSONA_ID+" = v."+Utilidades.TABLA_VENDEDOR_ID_PERSONA;
+            String sql = "SELECT * FROM " + Utilidades.TABLA_PERSONAS+" p INNER JOIN "+Utilidades.TABLA_CLIENTES+
+                    " c on p."+Utilidades.TABLA_PERSONA_ID+" = c."+Utilidades.TABLA_CLIENTES_ID_PERSONA;
             Cursor c = db.rawQuery(sql, null);
             if (c.getCount() == 0) {
                 showMessage("Error!", "No se encontraron registros");
@@ -116,18 +122,21 @@ public class ControllerVendedor extends AppCompatActivity {
             }
             StringBuffer buffer = new StringBuffer();
             while (c.moveToNext()) {
-                buffer.append("ID Vendedor: " + c.getString(6) + "\n");
+
+                buffer.append("ID Cliente: " + c.getString(6) + "\n");
                 buffer.append("Nombre: " + c.getString(1) + "\n");
                 buffer.append("Calle: " + c.getString(2) + "\n");
                 buffer.append("Colonia: " + c.getString(3) + "\n");
+                buffer.append("Ciudad: " + c.getString(8) + "\n");
+                buffer.append("RFC: " + c.getString(9) + "\n");
                 buffer.append("Telefono: " + c.getString(4) + "\n");
                 buffer.append("Correo: " + c.getString(5) + "\n");
-                buffer.append("Comisión: $" + c.getString(8) + "\n\n\n");
+                buffer.append("Saldo: $" + c.getString(10) + "\n\n\n");
 
             }
-            showMessage("Registros de Vendedores", buffer.toString());
+            showMessage("Registros de Clientes", buffer.toString());
         } catch (Exception e){
-        e.printStackTrace();
+            e.printStackTrace();
         }finally {
 
             db.close();
@@ -137,9 +146,9 @@ public class ControllerVendedor extends AppCompatActivity {
     public void consultarPorId(String id){
         SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
         try {
-            String sql = "SELECT * FROM " + Utilidades.TABLA_PERSONAS+" p INNER JOIN "+Utilidades.TABLA_VENDEDORES+
-                    " v on p."+Utilidades.TABLA_PERSONA_ID+" = v."+Utilidades.TABLA_VENDEDOR_ID_PERSONA+
-                    " WHERE v."+Utilidades.TABLA_VENDEDOR_ID+ " = "+id;
+            String sql = "SELECT * FROM " + Utilidades.TABLA_PERSONAS+" p INNER JOIN "+Utilidades.TABLA_CLIENTES+
+                    " c on p."+Utilidades.TABLA_PERSONA_ID+" = c."+Utilidades.TABLA_CLIENTES_ID_PERSONA+
+                    " WHERE c."+Utilidades.TABLA_CLIENTES_ID+ " = "+id;
             Cursor c = db.rawQuery(sql, null);
             if (!c.moveToFirst()) {
                 showMessage("Error!", "No se encontraron registros");
@@ -150,12 +159,13 @@ public class ControllerVendedor extends AppCompatActivity {
                 txtNombre.setText(c.getString(1));
                 txtCalle.setText(c.getString(2));
                 txtColonia.setText(c.getString(3));
+                txtCiudad.setText(c.getString(8));
+                txtRFC.setText(c.getString(9));
                 txtTelefono.setText(c.getString(4));
                 txtCorreo.setText(c.getString(5));
-                txtComision.setText(c.getString(8));
+                txtSaldo.setText(c.getString(10));
                 txtID.setText(c.getString(0));
                 txtID_persona.setText(c.getString(7));
-
             }
 
         } catch (Exception e){
@@ -166,7 +176,7 @@ public class ControllerVendedor extends AppCompatActivity {
         }
     }
 
-    public void modificarVendedor(){
+    public void modificarCliente(){
         if(validarTexto()){
             SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
             db.beginTransaction();
@@ -183,14 +193,16 @@ public class ControllerVendedor extends AppCompatActivity {
                 int idPersona = db.update(Utilidades.TABLA_PERSONAS,values, Utilidades.TABLA_PERSONA_ID+"=?", args);
 
                 ContentValues valuesFore = new ContentValues();
-                valuesFore.put(Utilidades.TABLA_VENDEDOR_COMISION, txtComision.getText().toString());
-                String[] argsVend = new String[]{txtID.getText().toString()};
-                int idVendedor = db.update(Utilidades.TABLA_VENDEDORES,valuesFore, Utilidades.TABLA_VENDEDOR_ID_PERSONA+"=?", argsVend);
+                valuesFore.put(Utilidades.TABLA_CLIENTES_SALDO, txtSaldo.getText().toString());
+                valuesFore.put(Utilidades.TABLA_CLIENTES_CIUDAD, txtCiudad.getText().toString());
+                valuesFore.put(Utilidades.TABLA_CLIENTES_RFC, txtRFC.getText().toString());
+                String[] argsCliente = new String[]{txtID.getText().toString()};
+                int idCliente = db.update(Utilidades.TABLA_CLIENTES,valuesFore, Utilidades.TABLA_CLIENTES_ID_PERSONA+"=?", argsCliente);
                 db.setTransactionSuccessful();
-                if(idVendedor > 0 && idPersona > 0)
-                    showMessage("Vendedor(a) actualizado(a) con exito","Se actualizo el vendedor(a): "+txtNombre.getText().toString());
+                if(idCliente > 0 && idPersona > 0)
+                    showMessage("Cliente(a) actualizado(a) con exito","Se actualizo el Cliente(a): "+txtNombre.getText().toString());
                 else
-                    showMessage("Vendedor(a) actualizado(a) falló","Fallo la actualizació del vendedor(as)");
+                    showMessage("Cliente(a) actualizado(a) falló","Fallo la actualizació del Cliente(a)");
 
                 clearText();
             }catch (Exception e){
@@ -205,23 +217,23 @@ public class ControllerVendedor extends AppCompatActivity {
                     "datos esten llenados correctamente");
     }
 
-    public void eliminarVendedor(){
+    public void eliminarCliente(){
         SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
         db.beginTransaction();
         try {
 
             String[] args = new String[]{txtID.getText().toString()};
-            int idVendedor = db.delete(Utilidades.TABLA_VENDEDORES, Utilidades.TABLA_VENDEDOR_ID+"=?",args);
+            int idCliente = db.delete(Utilidades.TABLA_CLIENTES, Utilidades.TABLA_CLIENTES_ID+"=?",args);
 
-            if(idVendedor > 0) {
+            if(idCliente > 0) {
                 String[] argsPer = new String[]{txtID_persona.getText().toString()};
                 int idPersona = db.delete(Utilidades.TABLA_PERSONAS, Utilidades.TABLA_PERSONA_ID+"=?",argsPer);
                 if(idPersona > 0) {
                     db.setTransactionSuccessful();
-                    showMessage("Vendedor(a) eliminado(a) con exito", "Se elimino el vendedor(a): " + txtNombre.getText().toString());
+                    showMessage("Cliente(a) eliminado(a) con exito", "Se elimino el Cliente(a): " + txtNombre.getText().toString());
                 }
-                }else
-                showMessage("Vendedor(a) eliminado(a) falló","Fallo la eliminación del vendedor(a)");
+            }else
+                showMessage("Cliente(a) eliminado(a) falló","Fallo la eliminación del Cliente(a)");
 
             db.close();
             clearText();
@@ -242,7 +254,9 @@ public class ControllerVendedor extends AppCompatActivity {
         txtColonia.setText("");
         txtTelefono.setText("");
         txtCorreo.setText("");
-        txtComision.setText("");
+        txtSaldo.setText("");
+        txtRFC.setText("");
+        txtCiudad.setText("");
 
     }
 
@@ -250,9 +264,11 @@ public class ControllerVendedor extends AppCompatActivity {
         if(txtNombre.getText().toString().trim().length() > 0 &&
                 txtCalle.getText().toString().trim().length() > 0 &&
                 txtColonia.getText().toString().trim().length() > 0 &&
+                txtCiudad.getText().toString().trim().length() > 0 &&
+                txtRFC.getText().toString().trim().length() > 0 &&
                 txtTelefono.getText().toString().trim().length() > 0 &&
                 txtCorreo.getText().toString().trim().length() > 0 &&
-                txtCorreo.getText().toString().trim().length() > 0)
+                txtSaldo.getText().toString().trim().length() > 0)
             return true;
         else
             return false;

@@ -1,4 +1,4 @@
-package org.rizosdb.utl.or_le_inventario.model;
+package org.rizosdb.utl.or_le_inventario.models;
 
 public class Vendedor {
     int idVendedor;

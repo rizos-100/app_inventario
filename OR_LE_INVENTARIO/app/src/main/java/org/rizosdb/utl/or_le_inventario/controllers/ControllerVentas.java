@@ -1,4 +1,4 @@
-package org.rizosdb.utl.or_le_inventario;
+package org.rizosdb.utl.or_le_inventario.controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,7 +10,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,9 +18,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.rizosdb.utl.or_le_inventario.R;
 import org.rizosdb.utl.or_le_inventario.db.ConexionSQLiteHelper;
 import org.rizosdb.utl.or_le_inventario.db.Utilidades;
-import org.rizosdb.utl.or_le_inventario.model.Cliente;
+import org.rizosdb.utl.or_le_inventario.models.Cliente;
 
 import java.util.ArrayList;
 
