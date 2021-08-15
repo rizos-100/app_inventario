@@ -15,7 +15,12 @@
         <activity android:name=".ControllerVendedor" />
         <activity android:name=".ControllerProveedor" />
         <activity android:name=".ControllerProducto" />
+<<<<<<< HEAD
         <activity android:name=".MainActivity" >
+=======
+        <activity android:name=".ControllerCompras" />
+        <activity android:name=".MainActivity">
+>>>>>>> a97df0aba8024082de092110f667518235183fe8
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -35,7 +35,11 @@ public class MainActivity extends AppCompatActivity {
         btnProductos = (ImageButton) findViewById(R.id.btnProductos);
         btnVendedores = findViewById(R.id.btnVendedores);
         btnClientes = findViewById(R.id.btnClientes);
+<<<<<<< HEAD
         btnVentas = findViewById(R.id.btnVenta);
+=======
+        btnCompras = findViewById(R.id.btnCompra);
+>>>>>>> a97df0aba8024082de092110f667518235183fe8
 
         btnProveedores.setOnClickListener(v -> {
             Intent intent = new Intent(this, ControllerProveedor.class);
@@ -57,8 +61,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+<<<<<<< HEAD
         btnVentas.setOnClickListener(v -> {
             Intent intent = new Intent(this, ControllerVentas.class);
+=======
+        btnCompras.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ControllerCompras.class);
+>>>>>>> a97df0aba8024082de092110f667518235183fe8
             startActivity(intent);
         });
 
