@@ -2,7 +2,7 @@ package org.rizosdb.utl.or_le_inventario.db;
 
 public class Utilidades {
 
-    public static final int VERSION_DB = 1;
+    public static final int VERSION_DB = 2;
     public static final String NOMBRE_DB = "InventarioDB";
 
     public static final String TABLA_VENDEDORES = "vendedor";
@@ -10,6 +10,8 @@ public class Utilidades {
     public static final String TABLA_PERSONAS = "persona";
     public static final String TABLA_COMPRAS = "compra";
     public static final String TABLA_DETALLE_COMPRAS = "detalleCompra";
+    public static final String TABLA_VENTAS = "ventas";
+    public static final String TABLA_DETALLE_VENTAS = "detalleVentas";
 
 
     public static final String TABLA_PERSONA_ID = "id";
@@ -33,7 +35,7 @@ public class Utilidades {
 
     public static final String TABLA_COMPRA_ID = "idCompra";
     public static final String TABLA_COMPRA_IDPROVEEDOR = "idProveedor";
-    public static final String TABLA_COMPRA_FECHA = "idCompra";
+    public static final String TABLA_COMPRA_FECHA = "fechaCompra";
     public static final String TABLA_COMPRA_TOTALPAGO = "totalPago";
     public static final String TABLA_COMPRA_TOTALPARES = "totalPares";
 
@@ -44,9 +46,19 @@ public class Utilidades {
     public static final String TABLA_DETALLE_COSTO = "costoUnitario";
     public static final String TABLA_DETALLE_IMPORTE = "importe";
 
+    public static final String TABLA_VENTA_ID = "idVenta";
+    public static final String TABLA_VENTA_ID_CLIENTE = "idCliente";
+    public static final String TABLA_VENTA_ID_VENDEDOR = "idVendedor";
+    public static final String TABLA_VENTA_FECHA = "fechaVenta";
+    public static final String TABLA_VENTA_TOTAL_PARES = "totalPares";
+    public static final String TABLA_VENTA_PRECIO_TOTAL = "cantidadTotal";
+    public static final String TABLA_VENTA_COMISION_VEN = "comisionVend";
 
-
-
+    public static final String TABLA_DETALLE_VENTA_ID = "idDetalleVenta";
+    public static final String TABLA_DETALLE_VENTA_ID_VENTA= "idVenta";
+    public static final String TABLA_DETALLE_VENTA_ID_PRODUCTO = "idProducto";
+    public static final String TABLA_DETALLE_VENTA_CANTIDAD_PAR = "cantidadPar";
+    public static final String TABLA_DETALLE_VENTA_IMPORTE = "importe";
 
 
     public static final String  CREAR_TABLA_PERSONA="CREATE TABLE "+TABLA_PERSONAS
@@ -96,6 +108,32 @@ public class Utilidades {
             "    FOREIGN KEY ("+TABLA_DETALLE_IDCOMPRA+") REFERENCES compra(idCompra),"+
             "CONSTRAINT fk_detalle_producto " +
             "    FOREIGN KEY ("+TABLA_DETALLE_IDPRODUCTO+") REFERENCES producto(numero)"+
+            ")";
+
+    public static final String CREAR_TABLA_VENTAS="CREATE TABLE "+TABLA_VENTAS
+            +" ("+TABLA_VENTA_ID+" TEXT PRIMARY KEY, "
+            +TABLA_VENTA_ID_CLIENTE+" INTEGER, "
+            +TABLA_VENTA_ID_VENDEDOR+" INTEGER, "
+            +TABLA_VENTA_FECHA+" TEXT, "
+            +TABLA_VENTA_TOTAL_PARES+" REAL, "
+            +TABLA_VENTA_PRECIO_TOTAL+" REAL, "
+            +TABLA_VENTA_COMISION_VEN+" REAL, "
+            +"CONSTRAINT fk_venta_cliente " +
+            "    FOREIGN KEY ("+TABLA_VENTA_ID_CLIENTE+") REFERENCES "+TABLA_CLIENTES+"("+TABLA_CLIENTES_ID+"), "+
+            "CONSTRAINT fk_venta_vendedor " +
+            "    FOREIGN KEY ("+TABLA_VENTA_ID_VENDEDOR+") REFERENCES "+TABLA_VENDEDORES+"("+TABLA_VENDEDOR_ID+")"+
+            ")";
+
+    public static final String CREAR_TABLA_DETALLE_VENTAS="CREATE TABLE "+TABLA_DETALLE_VENTAS
+            +" ("+TABLA_DETALLE_VENTA_ID+" TEXT PRIMARY KEY, "
+            +TABLA_DETALLE_VENTA_ID_VENTA+" INTEGER, "
+            +TABLA_DETALLE_VENTA_ID_PRODUCTO+" INTEGER, "
+            +TABLA_DETALLE_VENTA_CANTIDAD_PAR+" INTEGER, "
+            +TABLA_DETALLE_VENTA_IMPORTE+" REAL, "
+            +"CONSTRAINT fk_detalle_venta_venta " +
+            "    FOREIGN KEY ("+TABLA_DETALLE_VENTA_ID_VENTA+") REFERENCES "+TABLA_VENTAS+"("+TABLA_VENTA_ID+")"+
+            "CONSTRAINT fk_detalle_venta_producto " +
+            "    FOREIGN KEY ("+TABLA_DETALLE_VENTA_ID_PRODUCTO+") REFERENCES productos(numero)"+
             ")";
 
 }
