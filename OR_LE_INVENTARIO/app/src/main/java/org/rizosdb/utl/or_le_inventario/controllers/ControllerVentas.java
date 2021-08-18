@@ -14,6 +14,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -43,7 +44,7 @@ public class ControllerVentas extends AppCompatActivity {
             txtDescripTabla;
     EditText txtNumVenta;
 
-    Button btnAgregarProdVen,btnAgregarVenta;
+    Button btnAgregarProdVen,btnAgregarVenta,btnListaVenta,btnConsultarVenta,btnEliminarVenta;
 
     ArrayList<Cliente> arrayClientes;
     ArrayList<Vendedor> arrayVendedores;
@@ -79,8 +80,13 @@ public class ControllerVentas extends AppCompatActivity {
         txtFechaVenta = findViewById(R.id.txtFechaVenta);
         txtNumVenta = findViewById(R.id.txtNumVenta);
         txtSpinProd = findViewById(R.id.txtSpinProd);
+
         btnAgregarProdVen = findViewById(R.id.btnAgregarProdVen);
         btnAgregarVenta = findViewById(R.id.btnAgregarVenta);
+        btnListaVenta = findViewById(R.id.btnListaVenta);
+        btnConsultarVenta = findViewById(R.id.btnConsultarVenta);
+        btnEliminarVenta = findViewById(R.id.btnEliminarVenta);
+
         txtCantPar = findViewById(R.id.txtCantPar);
 
         txtDescripTabla = findViewById(R.id.txtDescripTabla);
@@ -94,8 +100,8 @@ public class ControllerVentas extends AppCompatActivity {
         numPares = new ArrayList<>();
 
         Date objDate = new Date();
-        SimpleDateFormat formateador = new SimpleDateFormat("dd '-' MMM '-' yyyy", new Locale("es", "MX"));
-        txtFechaVenta.setText("Fecha: "+formateador.format(objDate));
+        SimpleDateFormat formateador = new SimpleDateFormat("yyyy'-'MM'-'dd", new Locale("es", "MX"));
+        txtFechaVenta.setText(formateador.format(objDate));
         txtNumVenta.setText(""+consultarVentasTotal());
 
 
@@ -115,6 +121,16 @@ public class ControllerVentas extends AppCompatActivity {
 
         btnAgregarVenta.setOnClickListener(v -> {
             agregarVenta();
+        });
+
+        btnListaVenta.setOnClickListener(v -> {
+            consultarTodasVentas();
+        });
+        btnConsultarVenta.setOnClickListener(v -> {
+
+        });
+        btnEliminarVenta.setOnClickListener(v -> {
+            eliminarVenta();
         });
 
         tabla = new Tabla(this, tbTabla);
@@ -498,4 +514,84 @@ public class ControllerVentas extends AppCompatActivity {
         //finalizamos la actividad actual
         actividad.finish();
     }
+
+    public void consultarTodasVentas(){
+        SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
+        try {
+            String sql = "SELECT ve.*,pv.nombre as vendedor,cv.nombre as cliente FROM " + Utilidades.TABLA_VENTAS+" ve" +
+                    " INNER JOIN "+Utilidades.TABLA_VENDEDORES+" v on ve.idVendedor = v.id"+
+                    " INNER JOIN "+Utilidades.TABLA_PERSONAS+" pv on v.idPersona = pv.id"+
+                    " INNER JOIN "+Utilidades.TABLA_CLIENTES+" c on ve.idCliente = c.id"+
+                    " INNER JOIN "+Utilidades.TABLA_PERSONAS+" cv on c.idPersona = cv.id";
+
+            String sql_detalle = "SELECT dv.*,p.nombre FROM " + Utilidades.TABLA_DETALLE_VENTAS+" dv" +
+                    " INNER JOIN "+Utilidades.TABLA_VENTAS+" ve on ve.idVenta = dv.idVenta"+
+                    " INNER JOIN producto p on p.numero = dv.idProducto "+
+                    "WHERE dv.idVenta =?";
+
+            Cursor c = db.rawQuery(sql, null);
+            if (c.getCount() == 0) {
+                showMessage("Error!", "No se encontraron registros");
+                return;
+            }
+            StringBuffer buffer = new StringBuffer();
+            while (c.moveToNext()) {
+                buffer.append("ID Venta: " + c.getInt(0) + "\n");
+                buffer.append("Vendedor: " + c.getString(7) + "\n");
+                buffer.append("Cliente: " + c.getString(8) + "\n");
+                buffer.append("Fecha de venta: " + c.getString(3) + "\n");
+                buffer.append("Total de pares: " + c.getString(4) + "\n");
+                buffer.append("SubTotal: $" + c.getDouble(5) + "      IVA: $"+(c.getDouble(5)*0.16) + "\n");
+                buffer.append("Total: $" + (c.getDouble(5)*1.16 ) + "\n");
+                buffer.append("Comisión del vendedor: $" + c.getString(6) + "\n"+"******Detalle Venta******"+"\n");
+                String[] args = {c.getString(0)};
+                Cursor c_detalle = db.rawQuery(sql_detalle, args);
+                while (c_detalle.moveToNext()) {
+                    buffer.append(c_detalle.getString(2) + " - " +
+                            c_detalle.getString(5) + " Cant: "+ c_detalle.getString(3)
+                            + " $"+ c_detalle.getString(4)+"\n");
+                }
+
+                buffer.append("\n\n");
+            }
+            showMessage("Registros de Ventas", buffer.toString());
+        } catch (Exception e){
+            e.printStackTrace();
+        }finally {
+
+            db.close();
+        }
+    }
+
+    public void eliminarVenta(){
+        SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
+        db.beginTransaction();
+        try {
+
+            String[] args = new String[]{txtNumVenta.getText().toString()};
+            int idVenta = db.delete(Utilidades.TABLA_VENTAS, Utilidades.TABLA_VENTA_ID+"=?",args);
+
+            if(idVenta > 0) {
+                String[] argsPer = new String[]{txtNumVenta.getText().toString()};
+                int idDetalle = db.delete(Utilidades.TABLA_DETALLE_VENTAS, Utilidades.TABLA_DETALLE_VENTA_ID_VENTA+"=?",argsPer);
+                if(idDetalle > 0) {
+                    db.setTransactionSuccessful();
+                    showMessage("Venta eliminada", "Se elimino la venta con exito");
+                }
+            }else
+                showMessage("Vendedor(a) eliminado(a) falló","Fallo la eliminación del vendedor(a)");
+
+            db.close();
+            clearText(this);
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.e("info",e.toString());
+
+        }finally {
+            db.endTransaction();
+            db.close();
+        }
+    }
+
+
 }
