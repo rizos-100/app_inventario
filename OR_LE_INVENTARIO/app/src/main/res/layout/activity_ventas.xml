@@ -26,8 +26,9 @@
         android:layout_width="388dp"
         android:layout_height="677dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -46,11 +47,11 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/txtNumVenta"
+                    android:id="@+id/txtNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="10dp"
                     android:text="No.Venta"
                     android:textSize="18dp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:background="@android:drawable/editbox_background"
                     android:drawableEnd="@android:drawable/arrow_down_float"
@@ -71,7 +72,7 @@
                     android:textSize="13dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtNumVenta" />
+                    app:layout_constraintTop_toBottomOf="@+id/txtNum" />
 
                 <TextView
                     android:id="@+id/txtIdCliente"
@@ -98,7 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:background="@android:drawable/editbox_background"
                     android:drawableEnd="@android:drawable/arrow_down_float"
@@ -134,9 +135,9 @@
                     android:id="@+id/txtFechaVenta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
                     android:text="Fecha:"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/txtNumVenta"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -145,7 +146,7 @@
                     android:layout_width="175dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:background="@android:drawable/editbox_background"
                     android:drawableEnd="@android:drawable/arrow_down_float"
                     android:gravity="center_vertical"
@@ -160,7 +161,7 @@
                     android:layout_width="67dp"
                     android:layout_height="38dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:backgroundTint="#198754"
                     android:drawableLeft="@drawable/ic_add_circle_outline_white_24dp"
                     android:textSize="12sp"
@@ -172,14 +173,15 @@
                     android:layout_width="88dp"
                     android:layout_height="41dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:ems="10"
                     android:hint="Pares:"
-                    android:inputType="textPersonName"
+                    android:inputType="number|textPersonName"
                     app:layout_constraintStart_toEndOf="@+id/txtSpinProd"
                     app:layout_constraintTop_toBottomOf="@+id/txtComision" />
 
                 <LinearLayout
+                    android:id="@+id/linearLayout4"
                     android:layout_width="383dp"
                     android:layout_height="275dp"
                     android:layout_marginStart="15dp"
@@ -223,6 +225,98 @@
                     </ScrollView>
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtDescripTabla"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+
+                <Button
+                    android:id="@+id/btnModificarVenta"
+                    android:layout_width="164dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="#D36C16"
+                    android:drawableLeft="@drawable/ic_create_white_24dp"
+                    android:text="Modificar"
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtDescripTabla" />
+
+                <Button
+                    android:id="@+id/btnConsultarVenta"
+                    android:layout_width="180dp"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="#0D6EFD"
+                    android:drawableLeft="@drawable/ic_visibility_white_24dp"
+                    android:text="Consultar"
+                    android:textSize="10sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnAgregarVenta" />
+
+                <Button
+                    android:id="@+id/btnEliminarVenta"
+                    android:layout_width="170dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="#DC3545"
+                    android:drawableLeft="@drawable/ic_delete_forever_white_24dp"
+                    android:text="Eliminar"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnModificarVenta" />
+
+                <Button
+                    android:id="@+id/btnAgregarVenta"
+                    android:layout_width="181dp"
+                    android:layout_height="43dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="#198754"
+                    android:drawableLeft="@drawable/ic_add_circle_outline_white_24dp"
+                    android:text="Guardar"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtDescripTabla" />
+
+                <Button
+                    android:id="@+id/btnListaVenta"
+                    android:layout_width="159dp"
+                    android:layout_height="43dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="#B23CED"
+                    android:drawableLeft="@drawable/ic_assignment_white_24dp"
+                    android:text="Lista"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnEliminarVenta" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/txtNumVenta"
+                    android:layout_width="53dp"
+                    android:layout_height="39dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:inputType="number"
+                    app:layout_constraintStart_toEndOf="@+id/txtNum"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

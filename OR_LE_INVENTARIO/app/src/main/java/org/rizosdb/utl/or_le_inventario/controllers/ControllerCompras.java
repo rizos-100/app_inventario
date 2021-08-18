@@ -1,6 +1,5 @@
 package org.rizosdb.utl.or_le_inventario.controllers;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.database.Cursor;
@@ -8,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.MonthDisplayHelper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -23,11 +21,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.rizosdb.utl.or_le_inventario.R;
 import org.rizosdb.utl.or_le_inventario.db.ConexionSQLiteHelper;
-import org.rizosdb.utl.or_le_inventario.db.Utilidades;
 import org.rizosdb.utl.or_le_inventario.models.Compra;
 import org.rizosdb.utl.or_le_inventario.models.DetalleCompra;
 import org.rizosdb.utl.or_le_inventario.models.Producto;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -75,11 +71,11 @@ public class ControllerCompras extends AppCompatActivity {
 
         tblProductos=(TableLayout)findViewById(R.id.tblDetalleCompra);
 
-        btnAgregar=(Button)findViewById(R.id.btnAgregar);
-        btnEliminar=(Button)findViewById(R.id.btnEliminar);
-        btnConsultar=(Button)findViewById(R.id.btnConsultar);
-        btnModifcar=(Button)findViewById(R.id.btnModificar);
-        btnLista=(Button)findViewById(R.id.btnLista);
+        btnAgregar=(Button)findViewById(R.id.btnAgregarVenta);
+        btnEliminar=(Button)findViewById(R.id.btnEliminarVenta);
+        btnConsultar=(Button)findViewById(R.id.btnConsultarVenta);
+        btnModifcar=(Button)findViewById(R.id.btnModificarVenta);
+        btnLista=(Button)findViewById(R.id.btnListaVenta);
         btnAñadirDetalle=(Button)findViewById(R.id.btnAgregarProd);
         btnUpdateDet=(Button)findViewById(R.id.btnUpdateDet);
 

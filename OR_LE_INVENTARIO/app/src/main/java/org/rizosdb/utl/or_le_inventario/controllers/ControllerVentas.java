@@ -2,7 +2,11 @@ package org.rizosdb.utl.or_le_inventario.controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -10,7 +14,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,7 +31,6 @@ import org.rizosdb.utl.or_le_inventario.models.Cliente;
 import org.rizosdb.utl.or_le_inventario.models.Producto;
 import org.rizosdb.utl.or_le_inventario.models.Vendedor;
 
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,8 +39,12 @@ import java.util.Locale;
 
 public class ControllerVentas extends AppCompatActivity {
     TextView txtCliente,txtIdCliente,txtCalleVend,txtSpinVende,
-            txtIdVend,txtComision,txtFechaVenta,txtNumVenta,txtSpinProd,txtCantPar;
-    Button btnAgregarProdVen;
+            txtIdVend,txtComision,txtFechaVenta,txtSpinProd,txtCantPar,
+            txtDescripTabla;
+    EditText txtNumVenta;
+
+    Button btnAgregarProdVen,btnAgregarVenta;
+
     ArrayList<Cliente> arrayClientes;
     ArrayList<Vendedor> arrayVendedores;
     ArrayList<Producto> arrayProductos, arrayProductosTable;
@@ -53,6 +59,10 @@ public class ControllerVentas extends AppCompatActivity {
     private ArrayList<String[]> rows = new ArrayList<>();
 
     Tabla tabla;
+
+    int paresTotal = 0;
+    double suma = 0;
+    double comision = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +80,10 @@ public class ControllerVentas extends AppCompatActivity {
         txtNumVenta = findViewById(R.id.txtNumVenta);
         txtSpinProd = findViewById(R.id.txtSpinProd);
         btnAgregarProdVen = findViewById(R.id.btnAgregarProdVen);
+        btnAgregarVenta = findViewById(R.id.btnAgregarVenta);
         txtCantPar = findViewById(R.id.txtCantPar);
+
+        txtDescripTabla = findViewById(R.id.txtDescripTabla);
 
         tbTabla = findViewById(R.id.tbTabla);
 
@@ -83,7 +96,7 @@ public class ControllerVentas extends AppCompatActivity {
         Date objDate = new Date();
         SimpleDateFormat formateador = new SimpleDateFormat("dd '-' MMM '-' yyyy", new Locale("es", "MX"));
         txtFechaVenta.setText("Fecha: "+formateador.format(objDate));
-        txtNumVenta.setText("No. Venta: "+consultarVentasTotal());
+        txtNumVenta.setText(""+consultarVentasTotal());
 
 
         txtCliente.setOnClickListener(v -> {
@@ -98,6 +111,10 @@ public class ControllerVentas extends AppCompatActivity {
 
         btnAgregarProdVen.setOnClickListener(v -> {
             agregarArrayTable();
+        });
+
+        btnAgregarVenta.setOnClickListener(v -> {
+            agregarVenta();
         });
 
         tabla = new Tabla(this, tbTabla);
@@ -372,6 +389,10 @@ public class ControllerVentas extends AppCompatActivity {
     }
 
     private ArrayList<String[]> getInfo(ArrayList<Producto> datos,ArrayList<Integer> pares) throws ParseException {
+        paresTotal = 0;
+        suma = 0;
+        comision = 0;
+
         tbTabla.removeAllViews();
         rows =  new ArrayList<>();
         rows.add(header);
@@ -386,8 +407,95 @@ public class ControllerVentas extends AppCompatActivity {
                     String.valueOf(datos.get(i).getPrecioPromedio()),
                     String.valueOf(importe)
             };
+            paresTotal +=pares.get(i);
+            suma += importe;
             rows.add(row);
         }
+        comision = (suma*1.16)*objVendedor.getComision()/100;
+        txtDescripTabla.setText("Total de pares: "+paresTotal+"\n"+
+                "Suma: "+suma+"\n"+
+                "IVA: "+(suma*0.16)+"  "+
+                "Total: "+(suma*1.16)+"\n"+
+                "Comisión "+comision);
         return rows;
+    }
+
+    private void agregarVenta(){
+        if(validarTexto()){
+            SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
+            db.beginTransaction();
+            try {
+                ContentValues values = new ContentValues();
+                values.put(Utilidades.TABLA_VENTA_ID, txtNumVenta.getText().toString());
+                values.put(Utilidades.TABLA_VENTA_ID_CLIENTE, objCliente.getIdCliente());
+                values.put(Utilidades.TABLA_VENTA_ID_VENDEDOR,objVendedor.getIdVendedor());
+                values.put(Utilidades.TABLA_VENTA_FECHA,txtFechaVenta.getText().toString());
+                values.put(Utilidades.TABLA_VENTA_TOTAL_PARES, paresTotal);
+                values.put(Utilidades.TABLA_VENTA_PRECIO_TOTAL, suma);
+                values.put(Utilidades.TABLA_VENTA_COMISION_VEN, comision);
+
+                Long idVenta = db.insert(Utilidades.TABLA_VENTAS, Utilidades.TABLA_VENTA_ID, values);
+
+                /**/
+
+                if(idVenta > 0) {
+                    for (int i = 0; i < arrayProductosTable.size(); i++){
+
+                        db.execSQL("UPDATE producto SET "
+                                +"existencia= "+ (arrayProductosTable.get(i).getExistencia()-numPares.get(i)) + " "
+                                +" WHERE numero='"+arrayProductosTable.get(i).getIdProducto()+"';");;
+
+                        ContentValues valuesFore = new ContentValues();
+                        valuesFore.put(Utilidades.TABLA_DETALLE_VENTA_ID_VENTA, idVenta);
+                        valuesFore.put(Utilidades.TABLA_DETALLE_VENTA_ID_PRODUCTO, arrayProductosTable.get(i).getIdProducto());
+                        valuesFore.put(Utilidades.TABLA_DETALLE_VENTA_CANTIDAD_PAR, numPares.get(i));
+                        valuesFore.put(Utilidades.TABLA_DETALLE_VENTA_IMPORTE, (numPares.get(i) *
+                                arrayProductosTable.get(i).getPrecioPromedio())
+                        );
+                        Long idDetalle = db.insert(Utilidades.TABLA_DETALLE_VENTAS, Utilidades.TABLA_DETALLE_VENTA_ID, valuesFore);
+                    }
+
+                    db.setTransactionSuccessful();
+                    showMessage("Venta registrada con exito", "Se ingreso con el ID: " + idVenta);
+                }else
+                    showMessage("Falló la venta","Fallo el registro de la venta");
+
+                clearText(this);
+            }catch (Exception e){
+                e.printStackTrace();
+
+            }finally {
+                db.endTransaction();
+                db.close();
+            }
+        }else
+            showMessage("Datos incompletos","Porfavor, verifica que todos los " +
+                    "datos esten llenados correctamente");
+    }
+
+    public void showMessage(String title,String message)
+    {
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
+    }
+
+    public boolean validarTexto(){
+        if(objVendedor != null && objCliente != null && arrayProductosTable.size() > 0)
+            return true;
+        else
+            return false;
+
+    }
+
+    public void clearText(Activity actividad){
+        Intent intent=new Intent();
+        intent.setClass(actividad, actividad.getClass());
+        //llamamos a la actividad
+        actividad.startActivity(intent);
+        //finalizamos la actividad actual
+        actividad.finish();
     }
 }

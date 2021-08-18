@@ -63,11 +63,11 @@ public class ControllerProducto extends AppCompatActivity {
 
 
 
-        btnAgregar=(Button)findViewById(R.id.btnAgregar);
-        btnEliminar=(Button)findViewById(R.id.btnEliminar);
-        btnConsultar=(Button)findViewById(R.id.btnConsultar);
-        btnModifcar=(Button)findViewById(R.id.btnModificar);
-        btnLista=(Button)findViewById(R.id.btnLista);
+        btnAgregar=(Button)findViewById(R.id.btnAgregarVenta);
+        btnEliminar=(Button)findViewById(R.id.btnEliminarVenta);
+        btnConsultar=(Button)findViewById(R.id.btnConsultarVenta);
+        btnModifcar=(Button)findViewById(R.id.btnModificarVenta);
+        btnLista=(Button)findViewById(R.id.btnListaVenta);
 
         btnAgregar.setOnClickListener(v -> {
             agregarProducto();

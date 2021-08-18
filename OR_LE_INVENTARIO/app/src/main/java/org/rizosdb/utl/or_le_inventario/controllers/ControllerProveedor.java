@@ -39,11 +39,11 @@ public class ControllerProveedor extends AppCompatActivity {
         txtSaldo=(EditText)findViewById(R.id.txtSaldo);
 
 
-        btnAgregar=(Button)findViewById(R.id.btnAgregar);
-        btnEliminar=(Button)findViewById(R.id.btnEliminar);
-        btnConsultar=(Button)findViewById(R.id.btnConsultar);
-        btnModifcar=(Button)findViewById(R.id.btnModificar);
-        btnLista=(Button)findViewById(R.id.btnLista);
+        btnAgregar=(Button)findViewById(R.id.btnAgregarVenta);
+        btnEliminar=(Button)findViewById(R.id.btnEliminarVenta);
+        btnConsultar=(Button)findViewById(R.id.btnConsultarVenta);
+        btnModifcar=(Button)findViewById(R.id.btnModificarVenta);
+        btnLista=(Button)findViewById(R.id.btnListaVenta);
 
         //txtNum.setEnabled(false);
 

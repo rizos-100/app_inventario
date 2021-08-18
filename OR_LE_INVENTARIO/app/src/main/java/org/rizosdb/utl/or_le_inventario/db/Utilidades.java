@@ -2,7 +2,7 @@ package org.rizosdb.utl.or_le_inventario.db;
 
 public class Utilidades {
 
-    public static final int VERSION_DB = 2;
+    public static final int VERSION_DB = 3;
     public static final String NOMBRE_DB = "InventarioDB";
 
     public static final String TABLA_VENDEDORES = "vendedor";
@@ -111,7 +111,7 @@ public class Utilidades {
             ")";
 
     public static final String CREAR_TABLA_VENTAS="CREATE TABLE "+TABLA_VENTAS
-            +" ("+TABLA_VENTA_ID+" TEXT PRIMARY KEY, "
+            +" ("+TABLA_VENTA_ID+" INTEGER PRIMARY KEY, "
             +TABLA_VENTA_ID_CLIENTE+" INTEGER, "
             +TABLA_VENTA_ID_VENDEDOR+" INTEGER, "
             +TABLA_VENTA_FECHA+" TEXT, "
@@ -125,7 +125,7 @@ public class Utilidades {
             ")";
 
     public static final String CREAR_TABLA_DETALLE_VENTAS="CREATE TABLE "+TABLA_DETALLE_VENTAS
-            +" ("+TABLA_DETALLE_VENTA_ID+" TEXT PRIMARY KEY, "
+            +" ("+TABLA_DETALLE_VENTA_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "
             +TABLA_DETALLE_VENTA_ID_VENTA+" INTEGER, "
             +TABLA_DETALLE_VENTA_ID_PRODUCTO+" INTEGER, "
             +TABLA_DETALLE_VENTA_CANTIDAD_PAR+" INTEGER, "

@@ -27,11 +27,11 @@ public class ControllerCliente extends AppCompatActivity {
 
         sqLiteHelper = new ConexionSQLiteHelper(this,Utilidades.NOMBRE_DB,null, Utilidades.VERSION_DB);
 
-        Button btnAgregar = findViewById(R.id.btnAgregar);
-        Button btnConsultarTodo = findViewById(R.id.btnLista);
-        Button btnConsultar = findViewById(R.id.btnConsultar);
-        Button btnModificar = findViewById(R.id.btnModificar);
-        Button btnEliminar = findViewById(R.id.btnEliminar);
+        Button btnAgregar = findViewById(R.id.btnAgregarVenta);
+        Button btnConsultarTodo = findViewById(R.id.btnListaVenta);
+        Button btnConsultar = findViewById(R.id.btnConsultarVenta);
+        Button btnModificar = findViewById(R.id.btnModificarVenta);
+        Button btnEliminar = findViewById(R.id.btnEliminarVenta);
 
         txtNombre = findViewById(R.id.txtNombre);
         txtCalle = findViewById(R.id.txtCalle);

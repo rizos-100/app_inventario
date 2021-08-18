@@ -125,7 +125,7 @@
         app:layout_constraintVertical_bias="0.298">
 
         <Button
-            android:id="@+id/btnAgregar"
+            android:id="@+id/btnAgregarVenta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#198754"
@@ -134,7 +134,7 @@
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/btnEliminar"
+            android:id="@+id/btnEliminarVenta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#DC3545"
@@ -143,7 +143,7 @@
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/btnConsultar"
+            android:id="@+id/btnConsultarVenta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#0D6EFD"
@@ -152,7 +152,7 @@
             android:textSize="10sp" />
 
         <Button
-            android:id="@+id/btnModificar"
+            android:id="@+id/btnModificarVenta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#D36C16"
@@ -161,7 +161,7 @@
             android:textSize="10sp" />
 
         <Button
-            android:id="@+id/btnLista"
+            android:id="@+id/btnListaVenta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#B23CED"
