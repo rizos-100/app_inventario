@@ -127,7 +127,7 @@ public class ControllerVentas extends AppCompatActivity {
             consultarTodasVentas();
         });
         btnConsultarVenta.setOnClickListener(v -> {
-
+            consultarVentaPorId(txtNumVenta.getText().toString());
         });
         btnEliminarVenta.setOnClickListener(v -> {
             eliminarVenta();
@@ -382,7 +382,12 @@ public class ControllerVentas extends AppCompatActivity {
         try {
             String sql = "SELECT * FROM " + Utilidades.TABLA_VENTAS;
             Cursor cursor = db.rawQuery(sql,null);
-            count = cursor.getCount()+1;
+            if(cursor.moveToLast()){
+                count = 1+ cursor.getInt(0);
+            }else{
+                count = 1;
+            }
+
 
             cursor.close();
 
@@ -580,8 +585,6 @@ public class ControllerVentas extends AppCompatActivity {
                 }
             }else
                 showMessage("Vendedor(a) eliminado(a) falló","Fallo la eliminación del vendedor(a)");
-
-            db.close();
             clearText(this);
         }catch (Exception e){
             e.printStackTrace();
@@ -589,6 +592,62 @@ public class ControllerVentas extends AppCompatActivity {
 
         }finally {
             db.endTransaction();
+            db.close();
+        }
+    }
+
+    public void consultarVentaPorId(String id){
+        SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
+        try {
+            String sql = "SELECT ve.*,pv.*,cv.*,v.comision as comvend FROM " + Utilidades.TABLA_VENTAS+" ve" +
+                    " INNER JOIN "+Utilidades.TABLA_VENDEDORES+" v on ve.idVendedor = v.id"+
+                    " INNER JOIN "+Utilidades.TABLA_PERSONAS+" pv on v.idPersona = pv.id"+
+                    " INNER JOIN "+Utilidades.TABLA_CLIENTES+" c on ve.idCliente = c.id"+
+                    " INNER JOIN "+Utilidades.TABLA_PERSONAS+" cv on c.idPersona = cv.id" +
+                    " WHERE ve.idVenta = '"+id+"'";
+            String sql_detalle = "SELECT dv.*,p.* FROM " + Utilidades.TABLA_DETALLE_VENTAS+" dv" +
+                    " INNER JOIN "+Utilidades.TABLA_VENTAS+" ve on ve.idVenta = dv.idVenta"+
+                    " INNER JOIN producto p on p.numero = dv.idProducto "+
+                    "WHERE dv.idVenta =?";
+            Cursor c = db.rawQuery(sql, null);
+            if (!c.moveToFirst()) {
+                showMessage("Error!", "No se encontraron registros");
+                return;
+            }
+            StringBuffer buffer = new StringBuffer();
+            objVendedor = new Vendedor();
+            if (c.moveToFirst()) {
+                txtCliente.setText(c.getString(14));
+                txtIdCliente.setText("ID: "+c.getInt(13));
+                txtCalleVend.setText("Calle: "+c.getString(15));
+
+                txtSpinVende.setText(c.getString(8));
+                txtIdVend.setText("ID: "+c.getString(7));
+                txtComision.setText("Comisión: "+c.getFloat(19)+"%");
+                objVendedor.setComision(c.getFloat(19));
+                txtFechaVenta.setText(c.getString(3));
+
+                String[] args = {id};
+                Cursor c_detalle = db.rawQuery(sql_detalle, args);
+                arrayProductosTable = new ArrayList<>();
+                numPares = new ArrayList<>();
+                while (c_detalle.moveToNext()) {
+
+                    Producto objP = new Producto();
+                        objP.setIdProducto(c_detalle.getString(2));
+                        objP.setNombre(c_detalle.getString(6));
+                        objP.setLinea(c_detalle.getString(7));
+                        objP.setPrecioPromedio(c_detalle.getFloat(10));
+                    arrayProductosTable.add(objP);
+                    numPares.add(c_detalle.getInt(3));
+                }
+                tabla.agregarFilaTabla(getInfo(arrayProductosTable,numPares));
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }finally {
+
             db.close();
         }
     }

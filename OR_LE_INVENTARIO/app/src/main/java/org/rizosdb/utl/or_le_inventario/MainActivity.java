@@ -13,6 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import org.rizosdb.utl.or_le_inventario.controllers.ControllerCliente;
 import org.rizosdb.utl.or_le_inventario.controllers.ControllerCompras;
+import org.rizosdb.utl.or_le_inventario.controllers.ControllerGrafica;
 import org.rizosdb.utl.or_le_inventario.controllers.ControllerProducto;
 import org.rizosdb.utl.or_le_inventario.controllers.ControllerProveedor;
 import org.rizosdb.utl.or_le_inventario.controllers.ControllerVendedor;
@@ -23,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
     ImageButton
             btnProductos,btnClientes,
             btnProveedores,btnCompras,
-            btnVentas,btnVendedores;
+            btnVentas,btnVendedores,
+            btnGrafica;
 
     SQLiteDatabase db;
 
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         btnClientes = findViewById(R.id.btnClientes);
         btnVentas = findViewById(R.id.btnVenta);
         btnCompras = findViewById(R.id.btnCompra);
+        btnGrafica = findViewById(R.id.btnGrafica);
 
         btnProveedores.setOnClickListener(v -> {
             Intent intent = new Intent(this, ControllerProveedor.class);
@@ -72,6 +75,11 @@ public class MainActivity extends AppCompatActivity {
 
         btnCompras.setOnClickListener(v -> {
             Intent intent = new Intent(this, ControllerCompras.class);
+            startActivity(intent);
+        });
+
+        btnGrafica.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ControllerGrafica.class);
             startActivity(intent);
         });
 
