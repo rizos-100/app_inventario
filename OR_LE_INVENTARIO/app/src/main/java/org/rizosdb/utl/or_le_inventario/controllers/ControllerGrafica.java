@@ -55,66 +55,7 @@ public class ControllerGrafica extends AppCompatActivity implements OnChartValue
         sqLiteHelper = new ConexionSQLiteHelper(this, Utilidades.NOMBRE_DB,null, Utilidades.VERSION_DB);
 
         generarGraficaProductos();
-
-        chartC = findViewById(R.id.chartC);
-        txtClienteSlt = findViewById(R.id.txtClienteSlt);
-        chartC.getDescription().setEnabled(false);
-        chartC.setMaxVisibleValueCount(60);
-        chartC.setPinchZoom(true);
-        chartC.setDrawBarShadow(false);
-        chartC.setDrawGridBackground(false);
-        chartC.getAxisLeft().setDrawGridLines(false);
-        chartC.animateY(2000);
-        chartC.getLegend().setEnabled(false);
-
-        ArrayList<Producto> productos = obtenerClienteMasCompra();
-        ArrayList<BarEntry> values = new ArrayList<>();
-        for (int i = 0; i < productos.size(); i++) {
-
-            values.add(new BarEntry(i,
-                    productos.get(i).getExistencia(),
-                    productos.get(i).getNombre())
-            );
-            chartC.setX(8);
-        }
-
-        BarDataSet set1;
-
-        if (chartC.getData() != null &&
-                chartC.getData().getDataSetCount() > 0) {
-            set1 = (BarDataSet) chartC.getData().getDataSetByIndex(0);
-            set1.setValues(values);
-            chartC.getData().notifyDataChanged();
-            chartC.notifyDataSetChanged();
-        } else {
-            set1 = new BarDataSet(values, "Data Set");
-            set1.setColors(ColorTemplate.VORDIPLOM_COLORS);
-            set1.setDrawValues(true);
-
-            ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-            dataSets.add(set1);
-
-            BarData data = new BarData(dataSets);
-            chartC.setData(data);
-            chartC.setFitBars(true);
-        }
-
-        chartC.invalidate();
-
-        chartC.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                Log.e("info","E-> "+e.getData()+" H-> "+h.toString());
-
-                txtClienteSlt.setText("Cliente: "+e.getData());
-            }
-
-            @Override
-            public void onNothingSelected() {
-                txtClienteSlt.setText("Seleccione una barra tocandola");
-            }
-        });
-
+        generarGraficaClientes();
     }
 
     public ArrayList<Producto> obtenerProductoMasVendido(){
@@ -282,6 +223,64 @@ public class ControllerGrafica extends AppCompatActivity implements OnChartValue
         l.setEnabled(false);
 
         setDataProductos();
+    }
+
+    private void generarGraficaClientes(){
+        ArrayList<Producto> productos = obtenerClienteMasCompra();
+        ArrayList<BarEntry> values = new ArrayList<>();
+
+        chartC = findViewById(R.id.chartC);
+        txtClienteSlt = findViewById(R.id.txtClienteSlt);
+        chartC.getDescription().setEnabled(false);
+        chartC.setMaxVisibleValueCount(productos.size()+7);
+        chartC.setPinchZoom(true);
+        chartC.setDrawBarShadow(false);
+        chartC.setDrawGridBackground(false);
+        chartC.getAxisLeft().setDrawGridLines(false);
+        chartC.animateY(2000);
+        chartC.getLegend().setEnabled(false);
+
+        for (int i = 0; i < productos.size(); i++) {
+            values.add(new BarEntry(i,
+                    productos.get(i).getExistencia(),
+                    productos.get(i).getNombre())
+            );
+            chartC.setX(8);
+        }
+        BarDataSet set1;
+        if (chartC.getData() != null &&
+                chartC.getData().getDataSetCount() > 0) {
+            set1 = (BarDataSet) chartC.getData().getDataSetByIndex(0);
+            set1.setValues(values);
+            chartC.getData().notifyDataChanged();
+            chartC.notifyDataSetChanged();
+        } else {
+            set1 = new BarDataSet(values, "Data Set");
+            set1.setColors(ColorTemplate.VORDIPLOM_COLORS);
+            set1.setDrawValues(true);
+
+            ArrayList<IBarDataSet> dataSets = new ArrayList<>();
+            dataSets.add(set1);
+
+            BarData data = new BarData(dataSets);
+            chartC.setData(data);
+            chartC.setFitBars(true);
+        }
+
+        chartC.invalidate();
+
+        chartC.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                Log.e("info","E-> "+e.getData()+" H-> "+h.toString());
+                txtClienteSlt.setText("Cliente: "+e.getData());
+            }
+
+            @Override
+            public void onNothingSelected() {
+                txtClienteSlt.setText("Seleccione una barra tocandola");
+            }
+        });
     }
 
 
