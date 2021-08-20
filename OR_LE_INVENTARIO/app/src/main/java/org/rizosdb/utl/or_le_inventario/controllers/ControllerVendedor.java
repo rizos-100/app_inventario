@@ -123,7 +123,7 @@ public class ControllerVendedor extends AppCompatActivity {
                 buffer.append("Colonia: " + c.getString(3) + "\n");
                 buffer.append("Telefono: " + c.getString(4) + "\n");
                 buffer.append("Correo: " + c.getString(5) + "\n");
-                buffer.append("Comisión: $" + c.getString(8) + "\n\n\n");
+                buffer.append("Comisión: " + c.getString(8) + "%\n\n\n");
 
             }
             showMessage("Registros de Vendedores", buffer.toString());
