@@ -20,8 +20,6 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(Utilidades.CREAR_TABLA_PERSONA);
         db.execSQL(Utilidades.CREAR_TABLA_VENDEDOR);
         db.execSQL(Utilidades.CREAR_TABLA_CLIENTE);
-        db.execSQL(Utilidades.CREAR_TABLA_COMPRA);
-        db.execSQL(Utilidades.CREAR_TABLA_DETALLE_COMPRA);
         db.execSQL(Utilidades.CREAR_TABLA_VENTAS);
         db.execSQL(Utilidades.CREAR_TABLA_DETALLE_VENTAS);
 

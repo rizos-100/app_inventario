@@ -211,16 +211,15 @@ public class ControllerCompras extends AppCompatActivity {
             buffer.append("Fecha.: " + c.getString(2)+"\n");
             buffer.append("Total pagado: $ " + c.getString(3)+"\n");
             buffer.append("Total Pares.: " + c.getString(4)+"\n");
-            buffer.append("DETALLE COMPRA..................: \n");
-            Cursor c2=db.rawQuery("SELECT * FROM detalleCompra WHERE idCompra="+"idCompra", null);
+            buffer.append("DETALLE COMPRA.: \n");
+            Cursor c2=db.rawQuery("SELECT * FROM detalleCompra WHERE idCompra="+"'"+c.getString(0)+"'", null);
             while(c2.moveToNext())
             {
                 buffer.append("Clave Producto: "+c2.getString(2)+"\n");
                 buffer.append("Cantidad: "+c2.getString(3)+"\n");
-                buffer.append("Costo Unitario $: "+c2.getString(4)+"\n");
-                buffer.append("_____________________ \n");
+                buffer.append("Costo Unitario $: "+c2.getString(4)+"\n\n");
             }
-            buffer.append("\n");
+            buffer.append("_______________________\n\n");
 
         }
         showMessage("Registros", buffer.toString());
@@ -563,7 +562,7 @@ public class ControllerCompras extends AppCompatActivity {
             db.execSQL("UPDATE detalleCompra SET "
                     +"idProducto= '"+idProducto+ "',"
                     +"cantidad= "+txtCantidad.getText()+ ","
-                    +"costo= "+ p.getPrecioCosto()+ ","
+                    +"costoUnitario= "+ p.getPrecioCosto()+ ","
                     +"importe= "+ costo + " "
                     +" WHERE idDetalleCompra='"+idDetalle+"';");
 

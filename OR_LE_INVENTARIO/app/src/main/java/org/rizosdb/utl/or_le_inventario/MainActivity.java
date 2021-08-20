@@ -16,6 +16,7 @@ import org.rizosdb.utl.or_le_inventario.controllers.ControllerCompras;
 import org.rizosdb.utl.or_le_inventario.controllers.ControllerGrafica;
 import org.rizosdb.utl.or_le_inventario.controllers.ControllerProducto;
 import org.rizosdb.utl.or_le_inventario.controllers.ControllerProveedor;
+import org.rizosdb.utl.or_le_inventario.controllers.ControllerReporte;
 import org.rizosdb.utl.or_le_inventario.controllers.ControllerVendedor;
 import org.rizosdb.utl.or_le_inventario.controllers.ControllerVentas;
 
@@ -25,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
             btnProductos,btnClientes,
             btnProveedores,btnCompras,
             btnVentas,btnVendedores,
-            btnGrafica;
+            btnGrafica,btnReportes;
+
 
     SQLiteDatabase db;
 
@@ -46,7 +48,11 @@ public class MainActivity extends AppCompatActivity {
         btnClientes = findViewById(R.id.btnClientes);
         btnVentas = findViewById(R.id.btnVenta);
         btnCompras = findViewById(R.id.btnCompra);
+
         btnGrafica = findViewById(R.id.btnGrafica);
+
+        btnReportes = findViewById(R.id.btnReportes);
+
 
         btnProveedores.setOnClickListener(v -> {
             Intent intent = new Intent(this, ControllerProveedor.class);
@@ -78,10 +84,17 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+
         btnGrafica.setOnClickListener(v -> {
             Intent intent = new Intent(this, ControllerGrafica.class);
             startActivity(intent);
         });
+        btnReportes.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ControllerReporte.class);
+
+            startActivity(intent);
+        });
+
 
     }
 }

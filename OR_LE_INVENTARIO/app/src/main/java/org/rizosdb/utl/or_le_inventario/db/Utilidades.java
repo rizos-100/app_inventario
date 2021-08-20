@@ -86,7 +86,7 @@ public class Utilidades {
             "CONSTRAINT fk_cliente_persona " +
             "    FOREIGN KEY ("+TABLA_CLIENTES_ID_PERSONA+") REFERENCES "+TABLA_PERSONAS+"("+TABLA_PERSONA_ID+")"+
             ")";
-
+  /*
     public static final String CREAR_TABLA_COMPRA="CREATE TABLE "+TABLA_COMPRAS
             +" ("+TABLA_COMPRA_ID+" TEXT PRIMARY KEY, "
             +TABLA_COMPRA_IDPROVEEDOR+" TEXT, "
@@ -97,7 +97,7 @@ public class Utilidades {
             "    FOREIGN KEY ("+TABLA_COMPRA_IDPROVEEDOR+") REFERENCES proveedor(numero)"+
             ")";
 
-    public static final String CREAR_TABLA_DETALLE_COMPRA="CREATE TABLE "+TABLA_DETALLE_COMPRAS
+  public static final String CREAR_TABLA_DETALLE_COMPRA="CREATE TABLE "+TABLA_DETALLE_COMPRAS
             +" ("+TABLA_DETALLE_COMPRA_ID+" TEXT PRIMARY KEY, "
             +TABLA_DETALLE_IDCOMPRA+" TEXT, "
             +TABLA_DETALLE_IDPRODUCTO+" TEXT, "
@@ -108,7 +108,7 @@ public class Utilidades {
             "    FOREIGN KEY ("+TABLA_DETALLE_IDCOMPRA+") REFERENCES compra(idCompra),"+
             "CONSTRAINT fk_detalle_producto " +
             "    FOREIGN KEY ("+TABLA_DETALLE_IDPRODUCTO+") REFERENCES producto(numero)"+
-            ")";
+            ")"; */
 
     public static final String CREAR_TABLA_VENTAS="CREATE TABLE "+TABLA_VENTAS
             +" ("+TABLA_VENTA_ID+" INTEGER PRIMARY KEY, "

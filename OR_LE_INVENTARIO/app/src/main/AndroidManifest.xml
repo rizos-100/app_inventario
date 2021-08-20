@@ -16,6 +16,7 @@
         <activity android:name=".controllers.ControllerProveedor" />
         <activity android:name=".controllers.ControllerProducto" />
         <activity android:name=".controllers.ControllerCompras" />
+        <activity android:name=".controllers.ControllerReporte" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
